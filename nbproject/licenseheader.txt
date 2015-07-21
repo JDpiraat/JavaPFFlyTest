@@ -1,0 +1,7 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Niet te gebruiken bij vdab-testen! Die moet je zelf maken.
+<#if licenseLast??>
+${licenseLast}
+</#if>
