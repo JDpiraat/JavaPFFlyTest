@@ -21,13 +21,13 @@ public class CabineCrew extends VliegendPersoneelslid implements Kost {
         toegelatenGraden.add(Graad.STEWARD);
     }
 
-    private static final BigDecimal TOESLAG_PURSER = new BigDecimal(1.2);
+    private static final BigDecimal TOESLAG_PURSER = new BigDecimal(12).divide(BigDecimal.TEN); // toeslag 20%
 
     private String werkpositie;
     private Graad graad;
     private BigDecimal basisKostprijsPerDag;
 
-    public CabineCrew(String werkpositie, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) {
+    CabineCrew(String werkpositie, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) {
         super(certificaten, personeelsID, naam, adres);
         this.werkpositie = werkpositie;
         setGraad(graad);

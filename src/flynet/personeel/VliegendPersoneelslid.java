@@ -36,7 +36,7 @@ public abstract class VliegendPersoneelslid extends Personeelslid {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder(super.toString().replace("Personeelslid", "Vliegend personeelslid"));
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        stringBuilder.append("certificaten=");
+        stringBuilder.append(", certificaten=");
         stringBuilder.append(certificaten);
         stringBuilder.append('}');
         return stringBuilder.toString();

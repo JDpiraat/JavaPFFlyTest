@@ -23,9 +23,9 @@ public class CockpitCrew extends VliegendPersoneelslid implements Kost {
         toegelatenGraden.add(Graad.SENIORFLIGHTOFFICER);
     }
     
-    private static final BigDecimal TOESLAG_CAPTAIN = (new BigDecimal(13)).divide(BigDecimal.TEN);// toeslag 30%
-    private static final BigDecimal TOESLAG_SENIORFLIGHTOFFICER = (new BigDecimal(12)).divide(BigDecimal.TEN);// toeslag 20%
-    private static final BigDecimal TOESLAG_SECONDOFFICER = (new BigDecimal(11)).divide(BigDecimal.TEN);// toeslag 10%  
+    private static final BigDecimal TOESLAG_CAPTAIN = new BigDecimal(13).divide(BigDecimal.TEN);// toeslag 30%
+    private static final BigDecimal TOESLAG_SENIORFLIGHTOFFICER = new BigDecimal(12).divide(BigDecimal.TEN);// toeslag 20%
+    private static final BigDecimal TOESLAG_SECONDOFFICER = new BigDecimal(11).divide(BigDecimal.TEN);// toeslag 10%  
     
     private static final BigDecimal TOESLAG_CPL_CERTIFICAAT = new BigDecimal(50);
     
@@ -36,7 +36,11 @@ public class CockpitCrew extends VliegendPersoneelslid implements Kost {
     public CockpitCrew(int vlieguren, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) {
         super(certificaten, personeelsID, naam, adres);
         this.vlieguren = vlieguren;
-        setGraad(graad);
+        try {
+            setGraad(graad);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(naam + " kan niet gecreeert worden: " + ex.getMessage());
+        }
         setBasisKostprijsPerDag(basisKostprijsPerDag);
     }
 
