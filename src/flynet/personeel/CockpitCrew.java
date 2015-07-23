@@ -23,11 +23,12 @@ public class CockpitCrew extends VliegendPersoneelslid implements Kost {
         toegelatenGraden.add(Graad.SENIORFLIGHTOFFICER);
     }
     
-    private static final BigDecimal TOESLAG_CAPTAIN = new BigDecimal(13).divide(BigDecimal.TEN);// toeslag 30%
-    private static final BigDecimal TOESLAG_SENIORFLIGHTOFFICER = new BigDecimal(12).divide(BigDecimal.TEN);// toeslag 20%
+    private static final BigDecimal TOESLAG_CAPTAIN = BigDecimal.valueOf(1.3);// toeslag 30%
+    private static final BigDecimal TOESLAG_SENIORFLIGHTOFFICER = new BigDecimal("1.2");// toeslag 20%
+    // meest 'archaïsche' manier om hier de floating point representation-problemen uit de weg te helpen:
     private static final BigDecimal TOESLAG_SECONDOFFICER = new BigDecimal(11).divide(BigDecimal.TEN);// toeslag 10%  
     
-    private static final BigDecimal TOESLAG_CPL_CERTIFICAAT = new BigDecimal(50);
+    private static final BigDecimal TOESLAG_CPL_CERTIFICAAT = new BigDecimal(50); // toeslag 50€/dag
     
     private int vlieguren;
     private Graad graad;
@@ -77,6 +78,7 @@ public class CockpitCrew extends VliegendPersoneelslid implements Kost {
      * 
      * @param basisKostprijsPerDag moet groter dan 0 zijn.
      */
+    @Override
     public final void setBasisKostprijsPerDag(BigDecimal basisKostprijsPerDag) {
         if (basisKostprijsPerDag.signum() == 1) {
             this.basisKostprijsPerDag = basisKostprijsPerDag;

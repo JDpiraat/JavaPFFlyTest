@@ -21,7 +21,8 @@ public class CabineCrew extends VliegendPersoneelslid implements Kost {
         toegelatenGraden.add(Graad.STEWARD);
     }
 
-    private static final BigDecimal TOESLAG_PURSER = new BigDecimal(12).divide(BigDecimal.TEN); // toeslag 20%
+    private static final BigDecimal TOESLAG_PURSER = BigDecimal.valueOf(1.2); // toeslag 20%
+    private static final BigDecimal TOESLAG_EHBO_CERTIFICAAT = new BigDecimal(5); // toeslag 5€/dag
 
     private String werkpositie;
     private Graad graad;
@@ -69,6 +70,7 @@ public class CabineCrew extends VliegendPersoneelslid implements Kost {
      *
      * @param basisKostprijsPerDag moet groter dan 0 zijn.
      */
+    @Override
     public final void setBasisKostprijsPerDag(BigDecimal basisKostprijsPerDag) {
         if (basisKostprijsPerDag.signum() == 1) {
             this.basisKostprijsPerDag = basisKostprijsPerDag;
@@ -82,6 +84,9 @@ public class CabineCrew extends VliegendPersoneelslid implements Kost {
         BigDecimal totaleKostprijsPerDag = basisKostprijsPerDag;
         if (graad == Graad.PURSER) {
             totaleKostprijsPerDag = totaleKostprijsPerDag.multiply(TOESLAG_PURSER);
+        }
+        if (getCertificaten().contains(Certificaat.EHBO)) {
+            totaleKostprijsPerDag = totaleKostprijsPerDag.add(TOESLAG_EHBO_CERTIFICAAT);
         }
         return totaleKostprijsPerDag;
     }

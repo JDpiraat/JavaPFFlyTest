@@ -11,6 +11,7 @@ import java.math.BigDecimal;
  */
 public interface Kost {
     
+    void setBasisKostprijsPerDag(BigDecimal basisKostprijsPerDag);
     BigDecimal getBasisKostprijsPerDag();
     
     BigDecimal BerekenTotaleKostprijsPerDag();

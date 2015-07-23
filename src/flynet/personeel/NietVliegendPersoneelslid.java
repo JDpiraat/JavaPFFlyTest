@@ -51,6 +51,7 @@ public class NietVliegendPersoneelslid extends Personeelslid implements Kost {
      * 
      * @param basisKostprijsPerDag moet groter dan 0 zijn.
      */
+    @Override
     public final void setBasisKostprijsPerDag(BigDecimal basisKostprijsPerDag) {
         if (basisKostprijsPerDag.signum() == 1) {
             this.basisKostprijsPerDag = basisKostprijsPerDag;
