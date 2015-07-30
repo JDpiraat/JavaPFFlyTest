@@ -3,10 +3,10 @@
  */
 package flynet;
 
+import flynet.exceptions.ToestelBehoortNietTotVlootException;
 import flynet.personeel.VliegendPersoneelslid;
 import flynet.vloot.LuchtVaartuig;
 import flynet.vloot.VliegMaatschappij;
-import java.util.Objects;
 import java.util.Set;
 
 public class VluchtBuilder {
@@ -51,8 +51,8 @@ public class VluchtBuilder {
         return this;
     }
 
-    public Vlucht createVlucht() throws Vlucht.ToestelBehoortNietTotVlootException {
+    public Vlucht createVlucht() throws ToestelBehoortNietTotVlootException {
         return new Vlucht(vluchtID, bestemming, duurtijd, vliegMaatschappij, toestel, personeelsleden);
-    }    
+    }
 
 }

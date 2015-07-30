@@ -3,11 +3,16 @@
  */
 package flynet.personeel;
 
+import flynet.exceptions.personeel.FouteGraadException;
 import flynet.personeel.VliegendPersoneelslid.Graad;
 import java.math.BigDecimal;
 import java.util.Set;
 
 // vb-tje: dit wordt niet verwacht, maar zou wel mogen (constructor met veel parameters, Builder is ook auto-generated code).
+/**
+ * 
+ * @author Johan
+ */
 public class CabineCrewBuilder {
 
     private String werkpositie;
@@ -56,7 +61,7 @@ public class CabineCrewBuilder {
         return this;
     }
 
-    public CabineCrew createCabineCrew() {
+    public CabineCrew createCabineCrew() throws FouteGraadException {
         return new CabineCrew(werkpositie, graad, basisKostprijsPerDag, certificaten, personeelsID, naam, adres);
     }
 

@@ -4,6 +4,7 @@
 package flynet.personeel;
 
 import flynet.Kost;
+import flynet.exceptions.personeel.FouteGraadException;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,6 @@ import java.util.Set;
 public class CabineCrew extends VliegendPersoneelslid implements Kost {
 
     private static final Set<Graad> toegelatenGraden = new HashSet<>();
-
     static {
         toegelatenGraden.add(Graad.PURSER);
         toegelatenGraden.add(Graad.STEWARD);
@@ -28,10 +28,25 @@ public class CabineCrew extends VliegendPersoneelslid implements Kost {
     private Graad graad;
     private BigDecimal basisKostprijsPerDag;
 
-    CabineCrew(String werkpositie, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) {
+    /**
+     * use CabineCrewBuilder to instanciate CabineCrew object
+     * 
+     * @param werkpositie
+     * @param graad                 toegelaten waarden: PURSER, STEWARD.
+     * @param basisKostprijsPerDag  > 0
+     * @param certificaten
+     * @param personeelsID
+     * @param naam
+     * @param adres 
+     */
+    CabineCrew(String werkpositie, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) throws FouteGraadException{
         super(certificaten, personeelsID, naam, adres);
         this.werkpositie = werkpositie;
-        setGraad(graad);
+        try {
+            setGraad(graad);
+        } catch (FouteGraadException ex) {
+            throw new FouteGraadException(naam + " kan niet gecreëerd worden: " + ex.toString());
+        }
         setBasisKostprijsPerDag(basisKostprijsPerDag);
     }
 
@@ -51,13 +66,14 @@ public class CabineCrew extends VliegendPersoneelslid implements Kost {
     /**
      *
      * @param graad toegelaten waarden: PURSER, STEWARD.
+     * @throws flynet.exceptions.personeel.FouteGraadException
      */
     @Override
-    public final void setGraad(Graad graad) {
+    public final void setGraad(Graad graad) throws FouteGraadException {
         if (toegelatenGraden.contains(graad)) {
             this.graad = graad;
         } else {
-            throw new IllegalArgumentException("Foutieve graad!");
+            throw new FouteGraadException();
         }
     }
 

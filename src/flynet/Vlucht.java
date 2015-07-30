@@ -3,6 +3,7 @@
  */
 package flynet;
 
+import flynet.exceptions.ToestelBehoortNietTotVlootException;
 import flynet.personeel.VliegendPersoneelslid;
 import flynet.vloot.LuchtVaartuig;
 import flynet.vloot.VliegMaatschappij;
@@ -69,24 +70,7 @@ public class Vlucht {
             vluchtKostPerDag = vluchtKostPerDag.add(((Kost)personeelslid).BerekenTotaleKostprijsPerDag());            
         }
         return vluchtKostPerDag.multiply(new BigDecimal(duurtijd));
-    }
-
-    public static class ToestelBehoortNietTotVlootException extends Exception {
-
-        public ToestelBehoortNietTotVlootException() {
-        }
-
-        public ToestelBehoortNietTotVlootException(String string) {
-        }
-
-        public ToestelBehoortNietTotVlootException(String message, Throwable cause) {
-            super(message, cause);
-        }
-
-        public ToestelBehoortNietTotVlootException(Throwable cause) {
-            super(cause);
-        }
-    }
+    }    
 
     @Override
     public int hashCode() {
@@ -119,10 +103,7 @@ public class Vlucht {
         if (!Objects.equals(this.toestel, other.toestel)) {
             return false;
         }
-        if (!Objects.equals(this.personeelsleden, other.personeelsleden)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.personeelsleden, other.personeelsleden);
     }
 
     @Override

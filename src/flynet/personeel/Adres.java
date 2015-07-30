@@ -65,7 +65,7 @@ public class Adres {
 
     @Override
     public String toString() {
-        return "Adres{" + "straatNr=" + straatNr + ", postcode=" + postcode + ", gemeente=" + gemeente + '}';
+        return "Adres{" + straatNr + ", " + postcode + " " + gemeente + '}';
     }
     
 }

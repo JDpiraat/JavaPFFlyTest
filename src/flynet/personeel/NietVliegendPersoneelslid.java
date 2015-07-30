@@ -35,6 +35,7 @@ public class NietVliegendPersoneelslid extends Personeelslid implements Kost {
         if (urenPerWeek > 0 && urenPerWeek < 60) {
             this.urenPerWeek = urenPerWeek;
         } else {
+            // veel beter is een eigen checked exception te schrijven ipv IllegalArgumentException te gebruiken
             throw new IllegalArgumentException("Wij willen personeel dat werkt en zich niet overwerkt (uren per week tussen 0 en 60).");
         }
     }

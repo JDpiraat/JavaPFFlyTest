@@ -3,6 +3,7 @@
  */
 package flynet.personeel;
 
+import flynet.exceptions.personeel.FouteGraadException;
 import java.util.Set;
 
 /**
@@ -44,7 +45,7 @@ public abstract class VliegendPersoneelslid extends Personeelslid {
 
     public abstract Graad getGraad();
 
-    public abstract void setGraad(Graad graad);
+    public abstract void setGraad(Graad graad) throws FouteGraadException;
 
     public enum Graad {
 

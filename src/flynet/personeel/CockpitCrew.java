@@ -3,6 +3,7 @@
  */
 package flynet.personeel;
 
+import flynet.exceptions.personeel.FouteGraadException;
 import flynet.Kost;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -15,7 +16,6 @@ import java.util.Set;
 public class CockpitCrew extends VliegendPersoneelslid implements Kost {
 
     private static final Set<Graad> toegelatenGraden = new HashSet<>();
-
     static {
         toegelatenGraden.add(Graad.CAPTAIN);
         toegelatenGraden.add(Graad.JUNIORFLIGTOFFICER);
@@ -34,13 +34,13 @@ public class CockpitCrew extends VliegendPersoneelslid implements Kost {
     private Graad graad;
     private BigDecimal basisKostprijsPerDag;
 
-    public CockpitCrew(int vlieguren, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) {
+    public CockpitCrew(int vlieguren, Graad graad, BigDecimal basisKostprijsPerDag, Set<Certificaat> certificaten, String personeelsID, String naam, Adres adres) throws FouteGraadException{
         super(certificaten, personeelsID, naam, adres);
         this.vlieguren = vlieguren;
         try {
             setGraad(graad);
-        } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(naam + " kan niet gecreeert worden: " + ex.getMessage());
+        } catch (FouteGraadException ex) {
+            throw new FouteGraadException(naam + " kan niet gecreëerd worden: " + ex.toString());
         }
         setBasisKostprijsPerDag(basisKostprijsPerDag);
     }
@@ -61,12 +61,13 @@ public class CockpitCrew extends VliegendPersoneelslid implements Kost {
     /**
      * 
      * @param graad toegelaten waarden: CAPTAIN, JUNIORFLIGTOFFICER, SECONDOFFICER, SENIORFLIGHTOFFICER.
+     * @throws flynet.exceptions.personeel.FouteGraadException
      */
     @Override
-    public final void setGraad(Graad graad) {
+    public final void setGraad(Graad graad) throws FouteGraadException {
         if (toegelatenGraden.contains(graad)) {
             this.graad = graad;
-        } else throw new IllegalArgumentException("Foutieve graad!");
+        } else throw new FouteGraadException();
     }
 
     @Override

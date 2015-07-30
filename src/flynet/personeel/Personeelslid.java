@@ -41,8 +41,7 @@ public abstract class Personeelslid {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.personeelsID);
-        hash = 79 * hash + Objects.hashCode(this.naam);
+        hash = 79 * hash + Objects.hashCode(this.personeelsID);        
         return hash;
     }
 
@@ -56,9 +55,6 @@ public abstract class Personeelslid {
         }
         final Personeelslid other = (Personeelslid) obj;
         if (!Objects.equals(this.personeelsID, other.personeelsID)) {
-            return false;
-        }
-        if (!Objects.equals(this.naam, other.naam)) {
             return false;
         }
         return true;
