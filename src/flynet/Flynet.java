@@ -22,6 +22,11 @@ import flynet.vloot.LuchtVaartuig;
 import flynet.vloot.PassagiersVliegtuig;
 import flynet.vloot.VliegMaatschappij;
 import flynet.vloot.VrachtVliegtuig;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,9 +43,9 @@ import java.util.Set;
 public class Flynet {
 
     /**
-     * @param args the command line arguments
+     * @param args the command line arguments, hier dus geen.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         //*** Personeel
         Map<String, Personeelslid> personeelsleden = maakPersoneel();
         System.out.println("Overzicht personeelsleden:");
@@ -96,7 +101,7 @@ public class Flynet {
         Set<VliegendPersoneelslid> personeelBeijing = new HashSet<>();
         personeelBeijing.add((VliegendPersoneelslid) personeelsleden.get("Captain Kirk"));
         personeelBeijing.add((VliegendPersoneelslid) personeelsleden.get("Skywalker"));
-        
+
         try {
             beijing = new VluchtBuilder().setBestemming("Beijing")
                     .setDuurtijd(1)
@@ -109,7 +114,7 @@ public class Flynet {
             System.out.println(ex.getMessage());
         }
         vluchten.add(beijing);
-        
+
         //* Sydney
         Vlucht sydney = null;
         Set<VliegendPersoneelslid> personeelSydney = new HashSet<>();
@@ -130,7 +135,7 @@ public class Flynet {
             System.out.println(ex.getMessage());
         }
         vluchten.add(sydney);
-        
+
         //* Signapore
         Vlucht signapore = null;
         Set<VliegendPersoneelslid> personeelSignapore = new HashSet<>();
@@ -149,14 +154,14 @@ public class Flynet {
             System.out.println(ex.getMessage());
         }
         vluchten.add(signapore);
-        
+
         //* Malta
         Vlucht malta = null;
         Set<VliegendPersoneelslid> personeelMalta = new HashSet<>();
         personeelMalta.add((VliegendPersoneelslid) personeelsleden.get("Captain Kirk"));
         personeelMalta.add((VliegendPersoneelslid) personeelsleden.get("Spock"));
         personeelMalta.add((VliegendPersoneelslid) personeelsleden.get("Skywalker"));
-        
+
         try {
             malta = new VluchtBuilder().setBestemming("Malta")
                     .setDuurtijd(1)
@@ -167,9 +172,9 @@ public class Flynet {
                     .createVlucht();
         } catch (ToestelBehoortNietTotVlootException ex) {
             System.out.println(ex.getMessage());
-        }    
+        }
         vluchten.add(malta);
-        
+
         //*** output
         // opdeling vrachtvluchten vs passagiersvluchten 
         //(veel makkelijker met streams maar dat volgt na programming fundamentals 
@@ -206,8 +211,31 @@ public class Flynet {
             }
         }
         System.out.println("\n" + DOUBLEDASH80);
-    }
 
+        //*** wegschrijven naar file en terug inlezen
+        final String FLYNET_DAT_FILE = "flynet.dat";
+        
+        try (FileOutputStream fos = new FileOutputStream(FLYNET_DAT_FILE); ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+            oos.writeObject(vluchten);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        List<Vlucht> ingelezenVluchten = null;
+        try (FileInputStream fos = new FileInputStream(FLYNET_DAT_FILE); ObjectInputStream oos = new ObjectInputStream(fos);) {
+            ingelezenVluchten = (List<Vlucht>) oos.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        for (Vlucht vlucht : ingelezenVluchten) {
+            System.out.println(vlucht);
+        }
+
+    } 
+
+    // omkeren keys en values ... normaal zijn de keys de unieke objecten (en de values een waarde die niet uniek hoeft te zijn)
+    // dit is puur voor mijn gemak (ipv allemaal globale var's bv, vond ik dit, wel ... eens iets anders ...)
     private static Map<String, Personeelslid> maakPersoneel() {
         Adres europalaan = new Adres("Europalaan 37", "3600", "Genk");
         Adres keizerslaan = new Adres("Keizerslaan 11", "1000", "Brussel");
@@ -277,9 +305,9 @@ public class Flynet {
             System.out.println(ex.getMessage());
         }
 
-        Personeelslid Skywalker = null;
+        Personeelslid skywalker = null;
         try {
-            Skywalker = new CabineCrewBuilder()
+            skywalker = new CabineCrewBuilder()
                     .setAdres(keizerslaan)
                     .setBasisKostprijsPerDag(new BigDecimal(300))
                     .setCertificaten(new HashSet<>(Arrays.asList(FIRE, EHBO)))
@@ -306,8 +334,7 @@ public class Flynet {
                 "Pavel Checkov", pavelCheckov);
         personeelsleden.put(
                 "Hikaru Sulu", hikaruSulu);
-        personeelsleden.put(
-                "Skywalker", Skywalker);
+        personeelsleden.put("Skywalker", skywalker);
 
         return personeelsleden;
     }
@@ -333,6 +360,7 @@ public class Flynet {
 
     // ofwel moet je de toString's zo aanpassen ... niet echt gelukkig mee (either way): 
     // separation of concerns, high cohesion, mvc, & ... object heeft geen zak te maken met hoe je het voorstelt (mss te streng/teveel ineens?)
+    // dit 'print to console gedoe' lijkt me ook voor vereenvoudiging vatbaar: vrijveel werk waar je niet uit kan afleiden of iemand kan programmeren...
     private static void printVluchtGegevens(Vlucht vlucht) {
         // voorbereiding ;-)
         LuchtVaartuig luchtVaartuig = vlucht.getToestel();

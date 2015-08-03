@@ -7,6 +7,7 @@ import flynet.exceptions.ToestelBehoortNietTotVlootException;
 import flynet.personeel.VliegendPersoneelslid;
 import flynet.vloot.LuchtVaartuig;
 import flynet.vloot.VliegMaatschappij;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
@@ -15,14 +16,15 @@ import java.util.Set;
  *
  * @author Johan
  */
-public class Vlucht {
+public class Vlucht implements Serializable {
 
     private final int vluchtID;
     private final String bestemming;
     private final int duurtijd;
-    private final VliegMaatschappij vliegMaatschappij;
-    private final LuchtVaartuig toestel;
-    private final Set<VliegendPersoneelslid> personeelsleden;
+    // om het snel te kunnen wegschrijven ...
+    private final transient VliegMaatschappij vliegMaatschappij;
+    private final transient LuchtVaartuig toestel;
+    private final transient Set<VliegendPersoneelslid> personeelsleden;
 
     Vlucht(int vluchtID, String bestemming, int duurtijd, VliegMaatschappij vliegMaatschappij, LuchtVaartuig toestel, Set<VliegendPersoneelslid> personeelsleden)
             throws ToestelBehoortNietTotVlootException {
