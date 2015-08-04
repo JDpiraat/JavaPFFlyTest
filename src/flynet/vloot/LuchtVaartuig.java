@@ -12,14 +12,14 @@ import java.util.Objects;
  * @author Johan
  */
 public abstract class LuchtVaartuig implements Kost {
-    
-    private BigDecimal basisKostprijsPerDag;    
-    private String type;   
+
+    private BigDecimal basisKostprijsPerDag;
+    private String type;
     private int kruissnelheid;
     private int vliegbereik;
 
     /**
-     * 
+     *
      * @param basisKostprijsPerDag
      * @param type
      * @param kruissnelheid (km/u)
@@ -31,14 +31,14 @@ public abstract class LuchtVaartuig implements Kost {
         this.kruissnelheid = kruissnelheid;
         this.vliegbereik = vliegbereik;
     }
-    
+
     @Override
     public BigDecimal getBasisKostprijsPerDag() {
         return basisKostprijsPerDag;
     }
 
     /**
-     * 
+     *
      * @param basisKostprijsPerDag moet groter dan 0 zijn.
      */
     @Override
@@ -59,7 +59,7 @@ public abstract class LuchtVaartuig implements Kost {
     }
 
     /**
-     * 
+     *
      * @return de kruissnelheid in km/u.
      */
     public int getKruissnelheid() {
@@ -67,7 +67,7 @@ public abstract class LuchtVaartuig implements Kost {
     }
 
     /**
-     * 
+     *
      * @param kruissnelheid (km/u)
      */
     public void setKruissnelheid(int kruissnelheid) {
@@ -75,7 +75,7 @@ public abstract class LuchtVaartuig implements Kost {
     }
 
     /**
-     * 
+     *
      * @return het vliegbereik in km.
      */
     public int getVliegbereik() {
@@ -83,40 +83,18 @@ public abstract class LuchtVaartuig implements Kost {
     }
 
     /**
-     * 
+     *
      * @param vliegbereik (km)
      */
     public void setVliegbereik(int vliegbereik) {
         this.vliegbereik = vliegbereik;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + Objects.hashCode(this.type);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final LuchtVaartuig other = (LuchtVaartuig) obj;
-        if (!Objects.equals(this.type, other.type)) {
-            return false;
-        }
-        return true;
-    }
+    }    
 
     @Override
     public String toString() {
-        return "LuchtVaartuig{\n" + "basisKostprijsPerDag=" + basisKostprijsPerDag 
-                + "\n\ttype=" + type + "\n\tkruissnelheid=" + kruissnelheid 
+        return "LuchtVaartuig{\n" + "basisKostprijsPerDag=" + basisKostprijsPerDag
+                + "\n\ttype=" + type + "\n\tkruissnelheid=" + kruissnelheid
                 + "\n\tvliegbereik=" + vliegbereik + '}';
     }
-    
+
 }

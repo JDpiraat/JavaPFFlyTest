@@ -213,6 +213,7 @@ public class Flynet {
         System.out.println("\n" + DOUBLEDASH80);
 
         //*** wegschrijven naar file en terug inlezen
+        // zeer basis: vraag is of dat dit zo (ook als 'alles' serializable is) een meerwaarde is... aan de andere kant: weinig werk...
         final String FLYNET_DAT_FILE = "flynet.dat";
         
         try (FileOutputStream fos = new FileOutputStream(FLYNET_DAT_FILE); ObjectOutputStream oos = new ObjectOutputStream(fos);) {
@@ -359,7 +360,7 @@ public class Flynet {
     }
 
     // ofwel moet je de toString's zo aanpassen ... niet echt gelukkig mee (either way): 
-    // separation of concerns, high cohesion, mvc, & ... object heeft geen zak te maken met hoe je het voorstelt (mss te streng/teveel ineens?)
+    // separation of concerns, high cohesion, mvc, & ... een object heeft geen zak te maken met hoe je het voorstelt (mss te streng/teveel ineens?)
     // dit 'print to console gedoe' lijkt me ook voor vereenvoudiging vatbaar: vrijveel werk waar je niet uit kan afleiden of iemand kan programmeren...
     private static void printVluchtGegevens(Vlucht vlucht) {
         // voorbereiding ;-)

@@ -4,6 +4,7 @@
 package flynet.vloot;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  *
@@ -39,6 +40,22 @@ public class VrachtVliegtuig extends LuchtVaartuig {
     @Override
     public BigDecimal BerekenTotaleKostprijsPerDag() {
         return getBasisKostprijsPerDag().add(new BigDecimal(laadvermogen).multiply(TOESLAG_PER_TON_LAADVERMOGEN));
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.getType());
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LuchtVaartuig) {
+            final LuchtVaartuig other = (LuchtVaartuig) obj;
+            return Objects.equals(this.getType(), other.getType());
+        }
+        return false;
     }
     
 }

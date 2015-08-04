@@ -54,10 +54,7 @@ public abstract class Personeelslid {
             return false;
         }
         final Personeelslid other = (Personeelslid) obj;
-        if (!Objects.equals(this.personeelsID, other.personeelsID)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.personeelsID, other.personeelsID);
     }
 
     @Override

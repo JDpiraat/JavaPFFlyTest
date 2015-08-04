@@ -32,6 +32,7 @@ public class Vlucht implements Serializable {
         this.bestemming = bestemming;
         this.duurtijd = duurtijd;
         this.vliegMaatschappij = vliegMaatschappij;
+        // of een private setter hiervoor
         if (vliegMaatschappij.getVloot().contains(toestel)) {
             this.toestel = toestel;
         } else {
